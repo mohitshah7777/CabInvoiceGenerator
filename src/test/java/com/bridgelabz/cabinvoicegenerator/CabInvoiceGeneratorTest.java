@@ -5,6 +5,7 @@ import org.junit.Test;
 
 public class CabInvoiceGeneratorTest {
 
+    //Step1 - Calculate Fare
     @Test
     public void givenDistanceAndTime_shouldReturnTotalFare(){
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
