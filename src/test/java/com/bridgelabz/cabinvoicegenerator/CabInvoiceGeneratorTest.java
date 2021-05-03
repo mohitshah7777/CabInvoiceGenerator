@@ -24,13 +24,16 @@ public class CabInvoiceGeneratorTest {
         Assert.assertEquals(5,fare,0.0);
     }
 
-    //Step2 - Multiple Rides
+    //Step3 - Enhanced Invoice
     @Test
-    public void givenMultipleRides_ShouldReturnTotalFare() {
+    public void givenRides_ShouldReturnInvoiceSummary() {
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
-        Ride[] rides = {new Ride(2.0, 5),
-                new Ride(0.1, 1)};
-        double fare = invoiceGenerator.calculateFare(rides);
-        Assert.assertEquals(30.0, fare,0.0);
+        Ride[] rides = {
+                new Ride(2.0, 5),
+                new Ride(0.1, 1)
+        };
+        InvoiceSummary actualInvoiceSummary = invoiceGenerator.calculateFare(rides);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
+        Assert.assertEquals(expectedInvoiceSummary, actualInvoiceSummary);
     }
 }
