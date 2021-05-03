@@ -10,7 +10,6 @@ public class CabInvoiceGenerator {
         this.rideRepository = new RideRepository();
     }
 
-
     public double calculateFare(double distance, int time) {
         double totalFare = (distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_TIME);
         return Math.max(totalFare, MINIMUM_FARE);
@@ -19,9 +18,9 @@ public class CabInvoiceGenerator {
     public InvoiceSummary calculateFare(Ride[] rides) {
         double totalFare = 0;
         for (Ride ride : rides) {
-            totalFare += this.calculateFare(ride.distance, ride.time);
+            totalFare += ride.cabRide.calculateCostOfCabRide(ride);
         }
-         return new InvoiceSummary(rides.length, totalFare);
+        return new InvoiceSummary(rides.length, totalFare);
     }
 
     public InvoiceSummary getInvoiceSummary(String userId) {
