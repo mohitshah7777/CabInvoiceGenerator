@@ -24,26 +24,26 @@ public class CabInvoiceGeneratorTest {
         Assert.assertEquals(5,fare,0.0);
     }
 
+    //Step5 - Premium Rides (Bonus)
     @Test
     public void givenRides_ShouldReturnInvoiceSummary() {
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
         Ride[] rides = {
-                new Ride(2.0, 5),
-                new Ride(0.1, 1)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         InvoiceSummary actualInvoiceSummary = invoiceGenerator.calculateFare(rides);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
         Assert.assertEquals(expectedInvoiceSummary, actualInvoiceSummary);
     }
 
-    //Step4 - Invoice Service
     @Test
     public void givenUserIdAndRides_ShouldReturnInvoiceSummary() {
         String userId = "Mohit Shah";
         Ride[] rides = {
-                new Ride(2.0, 5),
-                new Ride(0.1, 1),
-                new Ride(1,2)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL),
+                new Ride(1, 2, CabRide.NORMAL)
         };
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
         invoiceGenerator.addRides(userId, rides);
@@ -51,4 +51,21 @@ public class CabInvoiceGeneratorTest {
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(3,42.0);
         Assert.assertEquals(expectedInvoiceSummary, actualInvoiceSummary);
     }
+
+    @Test
+    public void givenUserIdAndRidesForTwoCategoriesRides_ShouldReturnInvoiceSummary() {
+        String userId = "Mohit Shah";
+        Ride[] rides = {
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.PREMIUM),
+                new Ride(2, 2, CabRide.PREMIUM)
+        };
+        CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
+        invoiceGenerator.addRides(userId, rides);
+        InvoiceSummary summary = invoiceGenerator.getInvoiceSummary(userId);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(3, 79);
+        Assert.assertEquals(expectedInvoiceSummary, summary);
+    }
+
+
 }
